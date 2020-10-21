@@ -20,7 +20,7 @@ export async function readTodos(): Promise<Todo[]> {
 }
 
 export async function writeTodo(text: string) {
-    await axios.put<Todo>(baseUrl + '/api/todo-item', {
+    await axios.post<Todo>(baseUrl + '/api/todo-item', {
         name : text,
         isCompleted : false
     }, {
