@@ -11,9 +11,9 @@ const getVisibleTodos = (todos: Todo[], filter: VisibilityFilter) => {
         case VisibilityFilter.ShowAll:
             return todos
         case VisibilityFilter.ShowCompleted:
-            return todos.filter(t => t.completed)
+            return todos.filter(t => t.isCompleted)
         case VisibilityFilter.ShowActive:
-            return todos.filter(t => !t.completed)
+            return todos.filter(t => !t.isCompleted)
         default:
             throw new Error('Unknown filter: ' + filter)
     }
@@ -27,11 +27,16 @@ export default function TodoList(): JSX.Element {
     );
 
     return (
-        <ul>
-            {todos.map(todo => (
-                <TodoListItem key={todo.id} {...todo} onClick={() => dispatch(toggleTodo(todo))} />
+        <div>
+            <button>
+                Remove All Completed
+            </button>
+            <ul>
+                {todos.map(todo => (
+                    <TodoListItem key={todo.id} {...todo} onClick={() => dispatch(toggleTodo(todo))} />
 
-            ))}
-        </ul>
+                ))}
+            </ul>
+        </div>
     );
 }

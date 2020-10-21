@@ -4,26 +4,26 @@ import { addTodo } from './todoSlice';
 
 export default function AddTodo(): JSX.Element {
     const dispatch = useDispatch();
-    const [text, setText] = React.useState('');
+    const [name, setName] = React.useState('');
 
     function handleChange(e: { target: HTMLInputElement; }) {
-        setText(e.target.value);
+        setName(e.target.value);
     }
 
     function handleSubmit(e: any) {
         e.preventDefault()
 
-        if (!text.trim()) {
+        if (!name.trim()) {
             return
         }
-        dispatch(addTodo(text))
+        dispatch(addTodo(name))
 
-        setText('');
+        setName('');
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <input value={text} onChange={handleChange} />
+            <input value={name} onChange={handleChange} />
             <button type="submit">Add Todo</button>
         </form>
     )

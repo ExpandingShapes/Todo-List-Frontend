@@ -1,20 +1,24 @@
 import React from 'react'
 
 interface TodoProps {
-    completed: boolean,
-    text: string,
+    name: string,
+    isCompleted: boolean,
+    id: string
     onClick: () => any,
 }
 
-export default function TodoListItem({ completed, text, onClick }: TodoProps) {
+export default function TodoListItem({ isCompleted, name, onClick }: TodoProps) {
     return (
-        <li
-            onClick={onClick}
-            style={{
-                textDecoration: completed ? 'line-through' : 'none'
-            }}
-        >
-            {text}
-        </li>
+        <div>
+            <li
+                onClick={onClick}
+                style={{
+                    textDecoration: isCompleted ? 'line-through' : 'none'
+                }}
+            >
+                {name}
+            </li>
+            <button>Remove</button>
+        </div>
     )
 }
