@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { AppThunk, AppDispatch } from 'app/store'
 import { RootState } from 'app/rootReducer';
-import { writeTodo, readTodos as fetchTodos } from 'api/localhost';
+import { toggleTodoPatch, writeTodo, readTodos as fetchTodos } from 'api/localhost';
 import { Todo } from 'features/todoList/types';
 
 const initialState: Todo[] = [];
@@ -22,6 +22,7 @@ const todoSlice = createSlice({
 
             if (todo) {
                 todo.isCompleted = !todo.isCompleted;
+                toggleTodoPatch(todo.id, todo.isCompleted)
             }
         },
     }
@@ -31,8 +32,7 @@ export const { toggleTodo } = todoSlice.actions;
 
 //?
 export const createTodoList = (): AppThunk => async (dispatch: AppDispatch) => {
-    //const id = Math.random().toString(36).substr(2, 9);
-    window.history.pushState(null, document.title, '');//`${id}`);
+    window.history.pushState(null, document.title, '');
 }
 
 export const loadTodos = (): AppThunk => async (dispatch: AppDispatch) => {
@@ -42,16 +42,14 @@ export const loadTodos = (): AppThunk => async (dispatch: AppDispatch) => {
 
 export const addTodo = (
     text: string
-): AppThunk => async (dispatch: AppDispatch, getState: () => RootState) => {
+): AppThunk => async (dispatch: AppDispatch) => {
     const newTodo: Todo = {
-        id: '',  //Math.random().toString(36).substr(2, 9),
+        id: '',
         isCompleted: false,
         name: text,
     }
 
     dispatch(todoSlice.actions.receiveTodo(newTodo));
-
-    writeTodo(newTodo.name);//getState().todos);
 }
 
 export default todoSlice.reducer;

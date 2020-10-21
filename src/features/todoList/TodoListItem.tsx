@@ -1,13 +1,18 @@
 import React from 'react'
+import { deleteTodo } from 'api/localhost';
 
 interface TodoProps {
     name: string,
     isCompleted: boolean,
-    id: string
-    onClick: () => any,
+    id: string,
+    onClick: () => any
 }
 
-export default function TodoListItem({ isCompleted, name, onClick }: TodoProps) {
+function removeTodoHandler(id: string) {
+    deleteTodo(id);
+}
+
+export default function TodoListItem({ isCompleted, name, onClick, id }: TodoProps) {
     return (
         <div>
             <li
@@ -18,7 +23,9 @@ export default function TodoListItem({ isCompleted, name, onClick }: TodoProps) 
             >
                 {name}
             </li>
-            <button>Remove</button>
+            <button onClick={() => {removeTodoHandler(id)}}>
+                Remove
+            </button>
         </div>
     )
 }

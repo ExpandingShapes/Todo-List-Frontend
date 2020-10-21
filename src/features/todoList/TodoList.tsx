@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleTodo } from './todoSlice';
 import { VisibilityFilter } from 'features/visibilityFilter/visibilityFilterSlice';
 import { Todo } from './types';
+import { deleteCompletedTodos } from 'api/localhost';
 
 const getVisibleTodos = (todos: Todo[], filter: VisibilityFilter) => {
     switch (filter) {
@@ -26,14 +27,21 @@ export default function TodoList(): JSX.Element {
         (state: RootState) => getVisibleTodos(state.todos, state.visibilityFilter)
     );
 
+    function removeAllCompletedTodosHandler() {
+        deleteCompletedTodos();
+    }
+
     return (
         <div>
-            <button>
+            <button onClick={() => {removeAllCompletedTodosHandler()}}>
                 Remove All Completed
+            </button>
+            <button>
+                Complete All
             </button>
             <ul>
                 {todos.map(todo => (
-                    <TodoListItem key={todo.id} {...todo} onClick={() => dispatch(toggleTodo(todo))} />
+                    <TodoListItem key={todo.id} id={todo.id} {...todo} onClick={() => dispatch(toggleTodo(todo))} />
 
                 ))}
             </ul>
