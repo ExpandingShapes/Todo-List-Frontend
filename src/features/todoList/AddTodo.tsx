@@ -1,3 +1,4 @@
+import { writeTodo } from 'api/localhost';
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addTodo } from './todoSlice';
@@ -16,6 +17,7 @@ export default function AddTodo(): JSX.Element {
         if (!name.trim()) {
             return
         }
+        writeTodo(name);
         dispatch(addTodo(name))
 
         setName('');

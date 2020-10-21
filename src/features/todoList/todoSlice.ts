@@ -29,9 +29,10 @@ const todoSlice = createSlice({
 
 export const { toggleTodo } = todoSlice.actions;
 
+//?
 export const createTodoList = (): AppThunk => async (dispatch: AppDispatch) => {
-    const id = Math.random().toString(36).substr(2, 9);
-    window.history.pushState(null, document.title, `${id}`);
+    //const id = Math.random().toString(36).substr(2, 9);
+    window.history.pushState(null, document.title, '');//`${id}`);
 }
 
 export const loadTodos = (): AppThunk => async (dispatch: AppDispatch) => {
@@ -50,7 +51,7 @@ export const addTodo = (
 
     dispatch(todoSlice.actions.receiveTodo(newTodo));
 
-    writeTodo(newTodo);//getState().todos);
+    writeTodo(newTodo.name);//getState().todos);
 }
 
 export default todoSlice.reducer;

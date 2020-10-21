@@ -10,11 +10,11 @@ export default function App() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (window.location.pathname === '/') {
-      dispatch(createTodoList());
-    } else {
+    // if (window.location.pathname === '/') {
+    //   dispatch(createTodoList());
+    // } else {
       dispatch(loadTodos());
-    }
+    //}
   }, [dispatch]);
 
   return (
