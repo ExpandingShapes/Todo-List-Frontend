@@ -20,6 +20,12 @@ export async function writeTodo(text: string) {
      });
 }
 
+export async function toggleAllTodosPatch(isCompleted: boolean) {
+    await axios.patch(`${baseUrl}/api/todo-items/is-completed`, {
+        "is_completed" : isCompleted
+    });
+}
+
 export async function toggleTodoPatch(id: string, isCompleted: boolean) {
     await axios.patch<Todo>(`${baseUrl}/api/todo-item` , {
         "id" : id,

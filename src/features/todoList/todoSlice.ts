@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { AppThunk, AppDispatch } from 'app/store'
 import { RootState } from 'app/rootReducer';
-import { toggleTodoPatch, writeTodo, readTodos as fetchTodos } from 'api/localhost';
+import { toggleAllTodosPatch, toggleTodoPatch, writeTodo, readTodos as fetchTodos } from 'api/localhost';
 import { Todo } from 'features/todoList/types';
 
 const initialState: Todo[] = [];
@@ -25,10 +25,20 @@ const todoSlice = createSlice({
                 toggleTodoPatch(todo.id, todo.isCompleted)
             }
         },
+        toggleAllTodos(state) {
+            if (state.some(todo => todo.isCompleted === false)) {
+                toggleAllTodosPatch(true);
+                state.map(todo => todo.isCompleted = true)
+            } else {
+                toggleAllTodosPatch(false);
+                state.map(todo => todo.isCompleted = false)
+            }
+        }
     }
 });
 
-export const { toggleTodo } = todoSlice.actions;
+export const { toggleTodo, toggleAllTodos } = todoSlice.actions;
+//export const { toggleAllTodos } = todoSlice.actions.toggleAllTodos;
 
 //?
 export const createTodoList = (): AppThunk => async (dispatch: AppDispatch) => {
