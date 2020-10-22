@@ -21,8 +21,8 @@ const todoSlice = createSlice({
             let todo = state.find(todo => todo.id === action.payload.id);
 
             if (todo) {
-                todo.isCompleted = !todo.isCompleted;
                 toggleTodoPatch(todo.id, todo.isCompleted)
+                todo.isCompleted = !todo.isCompleted;
             }
         },
         toggleAllTodos(state) {
