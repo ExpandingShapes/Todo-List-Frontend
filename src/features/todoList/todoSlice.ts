@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { AppThunk, AppDispatch } from 'app/store'
 import { RootState } from 'app/rootReducer';
-import { toggleAllTodosPatch, toggleTodoPatch, writeTodo, readTodos as fetchTodos } from 'api/localhost';
+import { deleteCompletedTodos, deleteTodo, toggleAllTodosPatch, toggleTodoPatch, writeTodo, readTodos as fetchTodos } from 'api/localhost';
 import { Todo } from 'features/todoList/types';
 
 const initialState: Todo[] = [];
@@ -28,17 +28,24 @@ const todoSlice = createSlice({
         toggleAllTodos(state) {
             if (state.some(todo => todo.isCompleted === false)) {
                 toggleAllTodosPatch(true);
-                state.map(todo => todo.isCompleted = true)
+                state.map(todo => todo.isCompleted = true);
             } else {
                 toggleAllTodosPatch(false);
-                state.map(todo => todo.isCompleted = false)
+                state.map(todo => todo.isCompleted = false);
             }
+        },
+        removeTodo(state, action: PayloadAction<string>) {
+            deleteTodo(action.payload);
+            return state.filter(todo => todo.id !== action.payload);
+        }, 
+        removeCompletedTodos(state) {
+            deleteCompletedTodos(); 
+            return state.filter(todo => todo.isCompleted === false);
         }
     }
 });
 
-export const { toggleTodo, toggleAllTodos } = todoSlice.actions;
-//export const { toggleAllTodos } = todoSlice.actions.toggleAllTodos;
+export const { removeTodo, toggleTodo, toggleAllTodos, removeCompletedTodos } = todoSlice.actions;
 
 //?
 export const createTodoList = (): AppThunk => async (dispatch: AppDispatch) => {

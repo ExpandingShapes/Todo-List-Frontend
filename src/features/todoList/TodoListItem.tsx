@@ -1,5 +1,7 @@
 import React from 'react'
-import { deleteTodo } from 'api/localhost';
+//import { deleteTodo } from 'api/localhost';
+import { removeTodo } from './todoSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 interface TodoProps {
     name: string,
@@ -8,11 +10,13 @@ interface TodoProps {
     onClick: () => any
 }
 
-function removeTodoHandler(id: string) {
-    deleteTodo(id);
-}
-
 export default function TodoListItem({ isCompleted, name, onClick, id }: TodoProps) {
+    const dispatch = useDispatch();
+
+    function removeTodoHandler(id: string) {
+        dispatch(removeTodo(id));
+    }
+
     return (
         <div>
             <li

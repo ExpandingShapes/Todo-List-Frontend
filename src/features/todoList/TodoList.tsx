@@ -2,10 +2,9 @@ import React from 'react'
 import TodoListItem from './TodoListItem'
 import { RootState } from 'app/rootReducer';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleTodo, toggleAllTodos } from './todoSlice';
+import { removeCompletedTodos, toggleTodo, toggleAllTodos } from './todoSlice';
 import { VisibilityFilter } from 'features/visibilityFilter/visibilityFilterSlice';
 import { Todo } from './types';
-import { deleteCompletedTodos } from 'api/localhost';
 
 const getVisibleTodos = (todos: Todo[], filter: VisibilityFilter) => {
     switch (filter) {
@@ -32,7 +31,7 @@ export default function TodoList(): JSX.Element {
     }
 
     function removeAllCompletedTodosHandler() {
-        deleteCompletedTodos();
+        dispatch(removeCompletedTodos());
     }
 
     return (
